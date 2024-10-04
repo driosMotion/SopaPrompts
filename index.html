@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to List</title>
+</head>
+<body>
+    <h1>Upload a CSV file to display its content as a list</h1>
+    <input type="file" id="csvFileInput" accept=".csv">
+    <ul id="csvDataList"></ul>
+
+    <script>
+        document.getElementById('csvFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const rows = content.split("\n");
+
+                const dataList = document.getElementById('csvDataList');
+                dataList.innerHTML = ''; // Clear the list
+
+                rows.forEach(row => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = row;
+                    dataList.appendChild(listItem);
+                });
+            };
+
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+</html>
